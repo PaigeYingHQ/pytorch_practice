@@ -15,7 +15,7 @@ class CSVDataset(data.Dataset):
     def __getitem__(self, index: int):
         x = torch.tensor(numpy.asarray(self.x.loc[index]))
         y = torch.tensor(numpy.asarray(self.y.loc[index]))
-        return {'x':x,'y':y}
+        return x,y
 
     def __len__(self):
         return self.csv.shape[0]
@@ -26,7 +26,10 @@ if __name__ == '__main__':
     csv_filepath = '../data/csv/linear.csv'
     csv = CSVDataset(csv_filepath)
     print('number of samples:',len(csv))
-    print(csv[1])
 
+    dataloader = torch.utils.data.DataLoader(dataset=csv, batch_size=20)
 
-
+    for epoch in range(2):
+        for i, data in enumerate(dataloader):
+            input, label = data
+            print('epoch:', epoch, ' batch:', i, ' input:', input.size(), 'output:', label.size())
