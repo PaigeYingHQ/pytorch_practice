@@ -14,3 +14,6 @@ class DNN(nn.Module):
         x = F.relu(x)
         x = self.fc2(x)
         return x
+
+if __name__ == '__main__':
+    pass
